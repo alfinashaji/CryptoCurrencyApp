@@ -36,7 +36,10 @@ const Cardcoin = ({coin}) => {
         flexGrow: "1",
       }}
     >
-      <Link to={`/coins/${coin.id}`}>
+      <Link
+        to={`/coins/${coin.id}`}
+        style={{textDecoration: "none"}} // Remove underline here
+      >
         <Stack
           spacing={{xs: 1, sm: 2}}
           direction="row"

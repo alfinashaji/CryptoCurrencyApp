@@ -45,13 +45,14 @@ const SearchButton = () => {
     zIndex: 10,
     maxHeight: "300px", // Limit height to avoid overflow
     overflowY: "auto", // Add scroll if needed
-    width: mediaQuery && mediaQuery.mobile ? "90%" : "30%",
+    width: mediaQuery && mediaQuery.mobile ? "95%" : "30%",
   };
 
   const inputStyles = {
     width: "100%",
     background: "#171b2e",
     borderRadius: "5px",
+    height: "40px",
     input: {
       "&::placeholder": {
         opacity: 0.6,
@@ -65,7 +66,7 @@ const SearchButton = () => {
 
   return (
     <Box>
-      <Grid container alignItems="center" paddingLeft="15px">
+      <Grid container alignItems="center">
         <Grid item xs={12}>
           <Input
             sx={inputStyles}
