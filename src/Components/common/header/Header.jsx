@@ -20,6 +20,7 @@ import {AppContext} from "../../../App";
 import SearchButton from "../Button/Searchbutton";
 import Allbutton from "../Button/Allbutton";
 import logoImage from "../../../assets/images/react-logo-removebg-preview.png";
+import {Stack} from "@mui/material";
 
 const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
@@ -27,7 +28,7 @@ const navItems = ["Home", "About", "Contact"];
 function Header(props) {
   const {window} = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const {state} = useContext(AppContext);
+  const {state, mediaQuery} = useContext(AppContext);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -66,7 +67,7 @@ function Header(props) {
     <Box sx={{display: "flex"}}>
       <CssBaseline />
       <AppBar component="nav" sx={{background: state.theme.bgColor}}>
-        <Toolbar>
+        <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -76,6 +77,7 @@ function Header(props) {
           >
             <MenuIcon />
           </IconButton>
+          <Stack>{mediaQuery && mediaQuery.mobile ? <Allbutton /> : ""}</Stack>
 
           <Grid
             sx={{

@@ -39,6 +39,7 @@ const Tablesearchbtn = () => {
     borderRadius: "5px",
     color: "white",
     paddingLeft: "20px",
+    height: "40px",
     input: {
       "&::placeholder": {
         opacity: 0.6,

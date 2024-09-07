@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useCallback} from "react";
 import {styled} from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,12 +7,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Smallgraph from "../Graph/smallGraph";
 import {Avatar, Button, Stack, Typography} from "@mui/material";
 import {AppContext} from "../../../App";
 import ArrowForwardIosOutlinedIcon from "@mui/icons-material/ArrowForwardIosOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import axios from "axios";
+import debounce from "lodash.debounce";
+import Smallgraph from "../Graph/smallGraph";
+import {Link} from "react-router-dom";
 
 // Styled TableCell for header and body
 const StyledTableCell = styled(TableCell)(({theme}) => ({
@@ -34,6 +36,17 @@ const StyledTableRow = styled(TableRow)(({theme}) => ({
   borderBottom: `1px solid ${theme.palette.divider}`, // Border bottom for each row
 }));
 
+// Custom styled button
+const CustomButton = styled(Button)(({theme, disabled}) => ({
+  borderColor: disabled ? "white" : "default",
+  color: disabled ? "white" : "default",
+  "&.Mui-disabled": {
+    borderColor: "grey",
+    color: "grey",
+    opacity: 1, // Ensure the color is visible even when disabled
+  },
+}));
+
 const Tablesection = () => {
   const {state} = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(0);
@@ -41,24 +54,27 @@ const Tablesection = () => {
   const rowsPerPage = 10;
 
   // Fetch the graph data for a specific coin
-  const fetchGraphData = async (coinId) => {
-    const rootURL = process.env.REACT_APP_API_URL;
-    try {
-      const response = await axios.get(
-        `${rootURL}/coins/${coinId}/market_chart?vs_currency=usd&days=1`
-      );
-      setGraphData((prevData) => ({
-        ...prevData,
-        [coinId]: {
-          prices: response?.data?.prices?.map((value) => value[1]),
-          marketcap: response?.data?.market_caps?.map((value) => value[1]),
-          volumes: response?.data?.total_volumes?.map((value) => value[1]),
-        },
-      }));
-    } catch (error) {
-      console.error("Error fetching graph data", error);
-    }
-  };
+  const fetchGraphData = useCallback(
+    debounce(async (coinId) => {
+      const rootURL = process.env.REACT_APP_API_URL;
+      try {
+        const response = await axios.get(
+          `${rootURL}/coins/${coinId}/market_chart?vs_currency=usd&days=1`
+        );
+        setGraphData((prevData) => ({
+          ...prevData,
+          [coinId]: {
+            prices: response?.data?.prices?.map((value) => value[1]),
+            marketcap: response?.data?.market_caps?.map((value) => value[1]),
+            volumes: response?.data?.total_volumes?.map((value) => value[1]),
+          },
+        }));
+      } catch (error) {
+        console.error("Error fetching graph data", error);
+      }
+    }, 500), // Debounce interval
+    []
+  );
 
   // Compute the rows to display based on the current page
   const paginatedCoins =
@@ -80,7 +96,10 @@ const Tablesection = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-  console.log(currentPage, state.data.coins.length / 10 - 1);
+
+  const isLastPage = (currentPage + 1) * rowsPerPage >= state.data.coins.length;
+  const isFirstPage = currentPage === 0;
+
   return (
     <div style={{maxWidth: "100%", width: "100%", overflowX: "auto"}}>
       <TableContainer
@@ -92,15 +111,12 @@ const Tablesection = () => {
       >
         <Table
           aria-label="customized table"
-          sx={{
-            background: state.theme.bgColor,
-          }}
+          sx={{background: state.theme.bgColor}}
         >
           <TableHead>
             <TableRow
               sx={{
                 background: state.theme.bgColor,
-                // borderBottom: `2px solid ${state.theme.borderColor}`,
               }}
             >
               <StyledTableCell style={{color: state.theme.fontColor}}>
@@ -115,12 +131,7 @@ const Tablesection = () => {
               >
                 24h
               </StyledTableCell>
-              <StyledTableCell
-                align="left"
-                style={{
-                  color: "#20D9AE", // Placeholder for positive change
-                }}
-              >
+              <StyledTableCell align="left" style={{color: "#20D9AE"}}>
                 Rank
               </StyledTableCell>
               <StyledTableCell
@@ -129,12 +140,7 @@ const Tablesection = () => {
               >
                 Price
               </StyledTableCell>
-              <StyledTableCell
-                align="left"
-                style={{color: state.theme.fontColor}}
-              >
-                Graph
-              </StyledTableCell>
+              <StyledTableCell align="center">Graph</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -154,21 +160,23 @@ const Tablesection = () => {
                     }}
                     onMouseEnter={() => fetchGraphData(coinx.id)}
                   >
-                    <StyledTableCell
-                      style={{
-                        color: state.theme.fontColor,
-                      }}
-                    >
+                    <StyledTableCell style={{color: state.theme.fontColor}}>
                       <Stack direction={"row"} spacing={5}>
                         <Avatar
                           alt={coinx.name}
                           src={coinx.image}
                           sx={{width: 20, height: 20, background: "white"}}
                         />
-                        <Typography>{coinx.name}</Typography>
+                        <Typography>
+                          <Link
+                            to={`/coins/${coinx.id}`}
+                            style={{color: "inherit", textDecoration: "none"}}
+                          >
+                            {coinx.name}
+                          </Link>
+                        </Typography>
                       </Stack>
                     </StyledTableCell>
-
                     <StyledTableCell
                       align="left"
                       style={{color: state.theme.fontColor}}
@@ -186,11 +194,7 @@ const Tablesection = () => {
                     >
                       {coinx.price_change_percentage_24h}%
                     </StyledTableCell>
-                    <StyledTableCell
-                      style={{
-                        color: state.theme.fontColor,
-                      }}
-                    >
+                    <StyledTableCell style={{color: state.theme.fontColor}}>
                       {coinx.market_cap_rank}
                     </StyledTableCell>
                     <StyledTableCell
@@ -200,7 +204,6 @@ const Tablesection = () => {
                       ${coinx.current_price}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      {/* Render Smallgraph with updated data */}
                       <Smallgraph
                         data={graphData[coinx.id]}
                         title={coinx.name}
@@ -218,23 +221,21 @@ const Tablesection = () => {
             marginTop: "10px",
           }}
         >
-          <Button
+          <CustomButton
             onClick={handlePreviousPage}
             variant="outlined"
-            disabled={currentPage <= 0 ? true : false}
+            disabled={isFirstPage}
           >
             <ArrowBackIosNewOutlinedIcon />
-          </Button>
+          </CustomButton>
 
-          <Button
+          <CustomButton
             onClick={handleNextPage}
             variant="outlined"
-            disabled={
-              currentPage < state.data.coins.length / 10 - 1 ? false : true
-            }
+            disabled={isLastPage}
           >
             <ArrowForwardIosOutlinedIcon />
-          </Button>
+          </CustomButton>
         </div>
       </TableContainer>
     </div>
