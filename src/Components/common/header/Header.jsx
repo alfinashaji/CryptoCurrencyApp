@@ -1,5 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom"; // Import Link for routing
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,7 +14,6 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import {useContext} from "react";
 import {AppContext} from "../../../App";
@@ -23,7 +23,13 @@ import logoImage from "../../../assets/images/react-logo-removebg-preview.png";
 import {Stack} from "@mui/material";
 
 const drawerWidth = 240;
-const navItems = ["Home", "About", "Contact"];
+const navItems = [
+  {name: "Home", path: "/"},
+
+  {name: "Gainers", path: "/gainers"},
+  {name: "Losers", path: "/losers"},
+  {name: "AllCoins", path: "/AllCoins"},
+];
 
 function Header(props) {
   const {window} = props;
@@ -44,15 +50,15 @@ function Header(props) {
       </Typography>
 
       <Divider />
-      <Typography>All coins</Typography>
-      <Typography>Trending</Typography>
-      <Typography>Gainers</Typography>
-      <Typography>Losers</Typography>
       <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{textAlign: "center"}}>
-              <ListItemText />
+        {navItems.map(({name, path}) => (
+          <ListItem key={name} disablePadding>
+            <ListItemButton
+              component={Link}
+              to={path}
+              sx={{textAlign: "center"}}
+            >
+              <ListItemText primary={name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -109,10 +115,11 @@ function Header(props) {
                 color: state.theme.fontColor,
               }}
             >
-              <Typography>All coins</Typography>
-              <Typography>Trending</Typography>
-              <Typography>Gainers</Typography>
-              <Typography>Losers</Typography>
+              {navItems.map(({name, path}) => (
+                <Typography key={name} component={Link} to={path}>
+                  {name}
+                </Typography>
+              ))}
               <SearchButton />
               <Allbutton />
             </Grid>
