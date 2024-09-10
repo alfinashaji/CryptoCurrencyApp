@@ -3,9 +3,10 @@ export const initialValue = {
     bgColor: "#0D1421",
     tableHeadBgColor: "#222531",
     fontColor: "#FAFAFA",
-    borderColor: "#2961B4",
+    boxColor: "#171b2e",
     buttonColor: "#222531",
     buttonSelected: "#323546",
+    borderColor: "#19243a",
     mode: "dark",
   },
   data: {
@@ -22,15 +23,16 @@ export const appReducer = (state, action) => {
         ...state,
         theme: {
           mode: newMode,
-          bgColor: newMode === "dark" ? "#0D1421" : "#E0E0E0",
+          bgColor: newMode === "dark" ? "#0D1421" : "white",
           tableHeadBgColor:
             newMode === "dark"
               ? "#222531"
               : "linear-gradient(to bottom, #E0F7FA, #80DEEA)",
           fontColor: newMode === "dark" ? "#FAFAFA" : "#000000",
-          borderColor: newMode === "dark" ? "#2961B4" : "#2B717A",
+          boxColor: newMode === "dark" ? "#171b2e" : "#fff",
           buttonColor: newMode === "dark" ? "#222531" : "#878788",
           buttonSelected: newMode === "dark" ? "#323546" : "#616161",
+          borderColor: newMode === "dark" ? "#19243a" : "#e5e8ef",
         },
       };
 

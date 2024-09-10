@@ -30,10 +30,12 @@ const Cardcoin = ({coin}) => {
   return (
     <Box
       sx={{
-        background: state.theme.bgColor,
+        background: state.theme.boxColor,
         borderRadius: "10px",
         border: `1px solid ${state.theme.borderColor}`,
         flexGrow: "1",
+        boxShadow:
+          "rgba(88, 102, 126, 0.08) 0px 4px 24px, rgba(88, 102, 126, 0.12) 0px 1px 2px",
       }}
     >
       <Link
@@ -62,7 +64,7 @@ const Cardcoin = ({coin}) => {
             >
               {coin.name}
             </Typography>
-            <Typography style={{color: state.theme.borderColor}}>
+            <Typography style={{color: state.theme.fontColor}}>
               {coin.current_price}
             </Typography>
           </Stack>
