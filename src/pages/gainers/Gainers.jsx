@@ -53,7 +53,7 @@ const CustomButton = styled(Button)(({theme, disabled}) => ({
 }));
 
 const Gainers = () => {
-  const {state} = useContext(AppContext);
+  const {state, mediaQuery} = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(0);
   const [graphData, setGraphData] = useState({});
   const rowsPerPage = 10;
@@ -133,20 +133,24 @@ const Gainers = () => {
         >
           Gainers
         </Typography>
-        <Divider
-          orientation="vertical"
-          variant="middle"
-          flexItem
-          sx={{
-            borderColor: state.theme.borderColor, // or any other color
-            background: state.theme.fontColor,
-            height: "1px",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            width: "90%",
-            mt: 2.3,
-          }}
-        />
+        {mediaQuery && mediaQuery.mobile ? (
+          ""
+        ) : (
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{
+              borderColor: state.theme.borderColor, // or any other color
+              background: state.theme.fontColor,
+              height: "1px",
+              borderWidth: "1px",
+              borderStyle: "solid",
+              width: "90%",
+              mt: 2.3,
+            }}
+          />
+        )}
       </Stack>
 
       <TableContainer

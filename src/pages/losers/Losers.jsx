@@ -54,7 +54,7 @@ const CustomButton = styled(Button)(({theme, disabled}) => ({
 }));
 
 const Losers = () => {
-  const {state} = useContext(AppContext);
+  const {state, mediaQuery} = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(0);
   const [graphData, setGraphData] = useState({});
   const rowsPerPage = 10;
@@ -133,20 +133,24 @@ const Losers = () => {
         >
           Losers
         </Typography>
-        <Divider
-          orientation="vertical"
-          variant="middle"
-          flexItem
-          sx={{
-            borderColor: state.theme.borderColor, // or any other color
-            background: state.theme.fontColor,
-            height: "1px",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            width: "91%",
-            mt: 2.5,
-          }}
-        />
+        {mediaQuery && mediaQuery.mobile ? (
+          ""
+        ) : (
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{
+              borderColor: state.theme.borderColor, // or any other color
+              background: state.theme.fontColor,
+              height: "1px",
+              borderWidth: "1px",
+              borderStyle: "solid",
+              width: "91%",
+              mt: 2.5,
+            }}
+          />
+        )}
       </Stack>
       <TableContainer
         component={Paper}
