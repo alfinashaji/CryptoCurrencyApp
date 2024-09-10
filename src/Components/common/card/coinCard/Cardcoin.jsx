@@ -13,7 +13,8 @@ const Cardcoin = ({coin}) => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(
-        `${rootURL}/coins/${coin.id}/market_chart?vs_currency=usd&days=1`
+        `${rootURL}/coins/${coin.id}/market_chart?vs_currency=usd&days=1`,
+        {headers: {"Access-Control-Allow-Origin": "*"}}
       );
       response &&
         setData({

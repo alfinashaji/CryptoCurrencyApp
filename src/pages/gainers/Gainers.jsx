@@ -63,7 +63,8 @@ const Gainers = () => {
     const rootURL = process.env.REACT_APP_API_URL;
     try {
       const response = await axios.get(
-        `${rootURL}/coins/${coinId}/market_chart?vs_currency=usd&days=1`
+        `${rootURL}/coins/${coinId}/market_chart?vs_currency=usd&days=1`,
+        {headers: {"Access-Control-Allow-Origin": "*"}}
       );
       setGraphData((prevData) => ({
         ...prevData,

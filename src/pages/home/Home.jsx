@@ -15,7 +15,8 @@ const Home = () => {
   useEffect(() => {
     axios
       .get(
-        `${rootURL}/coins/markets?vs_currency=usd&order=price_change_percentage_24h_desc&per_page=100&page=1&sparkline=false`
+        `${rootURL}/coins/markets?vs_currency=usd&order=price_change_percentage_24h_desc&per_page=100&page=1&sparkline=false`,
+        {headers: {"Access-Control-Allow-Origin": "*"}}
       )
       .then((data) => {
         dispatch({type: "FETCH_COINS_REQUEST", payload: data?.data});
