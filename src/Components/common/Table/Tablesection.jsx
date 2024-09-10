@@ -30,10 +30,18 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
   },
 }));
 
-// Styled TableRow with border bottom
-const StyledTableRow = styled(TableRow)(({theme}) => ({
-  backgroundColor: theme.palette.action.hover,
-  borderBottom: `1px solid ${theme.palette.divider}`, // Border bottom for each row
+//  hover
+const StyledTableRow = styled(TableRow)(({theme, odd}) => ({
+  backgroundColor: odd
+    ? theme.palette.action.selected
+    : theme.palette.action.hover,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+  transition: "all 0.3s ease",
+  "&:hover": {
+    backgroundColor: theme.palette.action.hover,
+    boxShadow: `0 4px 8px rgba(0, 0, 0, 0.2)`,
+    transform: "scale(1.02)",
+  },
 }));
 
 // Custom styled button
@@ -41,9 +49,9 @@ const CustomButton = styled(Button)(({theme, disabled}) => ({
   borderColor: disabled ? "white" : "default",
   color: disabled ? "white" : "default",
   "&.Mui-disabled": {
-    borderColor: "grey",
-    color: "grey",
-    opacity: 1, // Ensure the color is visible even when disabled
+    borderColor: "#414040",
+    color: "#414040",
+    opacity: 1,
   },
 }));
 
@@ -54,27 +62,24 @@ const Tablesection = () => {
   const rowsPerPage = 10;
 
   // Fetch the graph data for a specific coin
-  const fetchGraphData = useCallback(
-    debounce(async (coinId) => {
-      const rootURL = process.env.REACT_APP_API_URL;
-      try {
-        const response = await axios.get(
-          `${rootURL}/coins/${coinId}/market_chart?vs_currency=usd&days=1`
-        );
-        setGraphData((prevData) => ({
-          ...prevData,
-          [coinId]: {
-            prices: response?.data?.prices?.map((value) => value[1]),
-            marketcap: response?.data?.market_caps?.map((value) => value[1]),
-            volumes: response?.data?.total_volumes?.map((value) => value[1]),
-          },
-        }));
-      } catch (error) {
-        console.error("Error fetching graph data", error);
-      }
-    }, 500), // Debounce interval
-    []
-  );
+  const fetchGraphData = debounce(async (coinId) => {
+    const rootURL = process.env.REACT_APP_API_URL;
+    try {
+      const response = await axios.get(
+        `${rootURL}/coins/${coinId}/market_chart?vs_currency=usd&days=1`
+      );
+      setGraphData((prevData) => ({
+        ...prevData,
+        [coinId]: {
+          prices: response?.data?.prices?.map((value) => value[1]),
+          marketcap: response?.data?.market_caps?.map((value) => value[1]),
+          volumes: response?.data?.total_volumes?.map((value) => value[1]),
+        },
+      }));
+    } catch (error) {
+      console.error("Error fetching graph data", error);
+    }
+  }, 500); // Debounce interval
 
   // Compute the rows to display based on the current page
   const paginatedCoins =
@@ -105,8 +110,8 @@ const Tablesection = () => {
       <TableContainer
         component={Paper}
         sx={{
-          background: state.theme.bgColor, // Background color for the entire table container
-          padding: "20px", // Add padding for better spacing
+          background: state.theme.bgColor,
+          padding: "20px",
         }}
       >
         <Table
@@ -131,7 +136,10 @@ const Tablesection = () => {
               >
                 24h
               </StyledTableCell>
-              <StyledTableCell align="left" style={{color: "#20D9AE"}}>
+              <StyledTableCell
+                align="left"
+                style={{color: state.theme.fontColor}}
+              >
                 Rank
               </StyledTableCell>
               <StyledTableCell
@@ -140,7 +148,12 @@ const Tablesection = () => {
               >
                 Price
               </StyledTableCell>
-              <StyledTableCell align="center">Graph</StyledTableCell>
+              <StyledTableCell
+                align="center"
+                style={{color: state.theme.fontColor}}
+              >
+                Graph
+              </StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -152,9 +165,10 @@ const Tablesection = () => {
                     .toLowerCase()
                     .includes(state?.searchValue.toLowerCase())
                 )
-                .map((coinx) => (
+                .map((coinx, index) => (
                   <StyledTableRow
                     key={coinx.id}
+                    odd={index % 2 === 0}
                     style={{
                       borderBottom: `2px solid ${state.theme.borderColor}`,
                     }}
@@ -220,24 +234,32 @@ const Tablesection = () => {
             gap: "10px",
             marginTop: "10px",
           }}
-        >
-          <CustomButton
-            onClick={handlePreviousPage}
-            variant="outlined"
-            disabled={isFirstPage}
-          >
-            <ArrowBackIosNewOutlinedIcon />
-          </CustomButton>
-
-          <CustomButton
-            onClick={handleNextPage}
-            variant="outlined"
-            disabled={isLastPage}
-          >
-            <ArrowForwardIosOutlinedIcon />
-          </CustomButton>
-        </div>
+        ></div>
       </TableContainer>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          marginTop: "10px",
+        }}
+      >
+        <CustomButton
+          onClick={handlePreviousPage}
+          variant="outlined"
+          disabled={isFirstPage}
+        >
+          <ArrowBackIosNewOutlinedIcon />
+        </CustomButton>
+
+        <CustomButton
+          onClick={handleNextPage}
+          variant="outlined"
+          disabled={isLastPage}
+        >
+          <ArrowForwardIosOutlinedIcon />
+        </CustomButton>
+      </div>
     </div>
   );
 };

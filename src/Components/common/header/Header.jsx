@@ -25,10 +25,9 @@ import {Stack} from "@mui/material";
 const drawerWidth = 240;
 const navItems = [
   {name: "Home", path: "/"},
-
+  {name: "AllCoins", path: "/AllCoins"},
   {name: "Gainers", path: "/gainers"},
   {name: "Losers", path: "/losers"},
-  {name: "AllCoins", path: "/AllCoins"},
 ];
 
 function Header(props) {
@@ -41,11 +40,14 @@ function Header(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{textAlign: "center"}}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{textAlign: "center", background: state.theme.bgColor}}
+    >
       <Typography variant="h6" sx={{my: 2}}>
         <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
           <img src={logoImage} alt="" style={{height: "35px"}} />
-          <div>Coin Wave</div>
+          <div style={{color: state.theme.fontColor}}>Coin Wave</div>
         </div>
       </Typography>
 
@@ -56,7 +58,7 @@ function Header(props) {
             <ListItemButton
               component={Link}
               to={path}
-              sx={{textAlign: "center"}}
+              sx={{textAlign: "center", color: state.theme.fontColor}}
             >
               <ListItemText primary={name} />
             </ListItemButton>
@@ -116,7 +118,12 @@ function Header(props) {
               }}
             >
               {navItems.map(({name, path}) => (
-                <Typography key={name} component={Link} to={path}>
+                <Typography
+                  key={name}
+                  component={Link}
+                  to={path}
+                  sx={{textDecoration: "none", color: "inherit"}} // Remove underline and inherit color
+                >
                   {name}
                 </Typography>
               ))}

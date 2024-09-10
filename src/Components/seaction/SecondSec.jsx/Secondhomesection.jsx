@@ -1,4 +1,4 @@
-import {Grid, Stack, Typography} from "@mui/material";
+import {Divider, Grid, Stack, Typography} from "@mui/material";
 import React, {useContext, useEffect, useState} from "react";
 import Cardcoin from "../../common/card/coinCard/Cardcoin";
 import {AppContext} from "../../../App";
@@ -29,19 +29,39 @@ const Secondhomesection = () => {
             paddingBottom: "30px",
           }}
         >
-          <Stack>
-            <Typography sx={{color: state.theme.fontColor, fontSize: "25px"}}>
+          <Stack
+            direction="row"
+            style={{
+              paddingLeft: "15px",
+              fontSize: "x-large",
+              paddingTop: "36px",
+              gap: "10px",
+              width: "100%",
+            }}
+          >
+            <Typography
+              sx={{
+                color: state.theme.fontColor,
+                fontSize: "25px",
+              }}
+            >
               Featured Coins
             </Typography>
-          </Stack>
-          {/* <Stack sx={{width: "80%", display: "flex"}}>
-            <hr
-              style={{
-                width: "100%",
-                borderBottom: `2px solid ${state.theme.borderColor}`,
+            <Divider
+              orientation="vertical"
+              variant="middle"
+              flexItem
+              sx={{
+                borderColor: state.theme.borderColor, // or any other color
+                background: state.theme.fontColor,
+                height: "1px",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                width: "85%",
+                mt: 2.5,
               }}
             />
-          </Stack> */}
+          </Stack>
         </Grid>
         <Stack
           container

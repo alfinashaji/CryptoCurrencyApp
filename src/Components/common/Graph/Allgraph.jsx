@@ -69,7 +69,7 @@ const Allgraph = ({data, title}) => {
             },
           ]}
           type="line"
-          width="200"
+          width="250"
           height="30"
         />
       )}

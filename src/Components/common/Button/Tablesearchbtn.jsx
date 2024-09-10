@@ -35,7 +35,7 @@ const Tablesearchbtn = () => {
 
   const inputStyles = {
     width: "100%",
-    background: "#171b2e",
+    background: state.theme.boxColor,
     borderRadius: "5px",
     color: "white",
     paddingLeft: "20px",
@@ -43,7 +43,7 @@ const Tablesearchbtn = () => {
     input: {
       "&::placeholder": {
         opacity: 0.6,
-        color: "#ffffff",
+        color: state.theme.fontColor,
         fontSize: "13px",
         paddingX: 1.5,
       },

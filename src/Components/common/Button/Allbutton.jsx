@@ -20,15 +20,15 @@ const Allbutton = () => {
         size="small"
         onClick={toggleDarkMode}
         sx={{
-          backgroundColor: "#030619", // Sets the background color
-          color: "white", // Sets the color of the icon
+          backgroundColor: isDarkMode ? "#030619" : "#e9e9e9", // Sets the background color
+          color: "#ffffff", // Sets the color of the icon
           "&:hover": {
             backgroundColor: "#030619", // Keeps the background color on hover
           },
         }}
       >
-        {isDarkMode ? (
-          <DarkMode sx={{color: "yellow", fontSize: "20px"}} />
+        {!isDarkMode ? (
+          <DarkMode sx={{color: "#ffc40c", fontSize: "20px"}} />
         ) : (
           <LightMode sx={{color: "#FFFFFF", fontSize: "inherit"}} />
         )}

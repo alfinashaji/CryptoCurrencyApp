@@ -35,7 +35,7 @@ const SearchButton = () => {
   const boxStyles = {
     marginTop: "10px",
     padding: "10px",
-    background: "#0D1421",
+    background: state.theme.boxColor,
     border: "1px solid #2961B4",
     borderRadius: "5px",
     boxShadow: "0px 4px 8px rgba(0,0,0,0.1)",
@@ -50,13 +50,13 @@ const SearchButton = () => {
 
   const inputStyles = {
     width: "100%",
-    background: "#171b2e",
+    background: state.theme.boxColor,
     borderRadius: "5px",
     height: "40px",
     input: {
       "&::placeholder": {
         opacity: 0.6,
-        color: "#ffffff",
+        color: state.theme.fontColor,
 
         fontSize: "13px",
         paddingX: 1.5,
