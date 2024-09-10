@@ -30,13 +30,16 @@ const Detailscoin = () => {
   useEffect(() => {
     const fetchCoinData = async () => {
       try {
-        const response = await axios.get(`${rootURL}/coins/${id}`);
+        const response = await axios.get(`${rootURL}/coins/${id}`, {
+          headers: {"Access-Control-Allow-Origin": "*"},
+        });
         setCoinData(response.data);
         // Log the entire response to check its structure
         console.log("Fetched coin data:", response.data);
 
         const chartData = await axios.get(
-          `${rootURL}/coins/${id}/market_chart?vs_currency=inr&days=1`
+          `${rootURL}/coins/${id}/market_chart?vs_currency=inr&days=1`,
+          {headers: {"Access-Control-Allow-Origin": "*"}}
         );
         chartData &&
           setData({
