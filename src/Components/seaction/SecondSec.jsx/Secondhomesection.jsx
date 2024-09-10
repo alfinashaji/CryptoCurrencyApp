@@ -4,7 +4,7 @@ import Cardcoin from "../../common/card/coinCard/Cardcoin";
 import {AppContext} from "../../../App";
 
 const Secondhomesection = () => {
-  const {state} = useContext(AppContext);
+  const {state, mediaQuery} = useContext(AppContext);
 
   return (
     <Grid>
@@ -47,20 +47,24 @@ const Secondhomesection = () => {
             >
               Featured Coins
             </Typography>
-            <Divider
-              orientation="vertical"
-              variant="middle"
-              flexItem
-              sx={{
-                borderColor: state.theme.borderColor, // or any other color
-                background: state.theme.fontColor,
-                height: "1px",
-                borderWidth: "1px",
-                borderStyle: "solid",
-                width: "85%",
-                mt: 2.5,
-              }}
-            />
+            {mediaQuery && mediaQuery.mobile ? (
+              ""
+            ) : (
+              <Divider
+                orientation="vertical"
+                variant="middle"
+                flexItem
+                sx={{
+                  borderColor: state.theme.borderColor, // or any other color
+                  background: state.theme.fontColor,
+                  height: "1px",
+                  borderWidth: "1px",
+                  borderStyle: "solid",
+                  width: "85%",
+                  mt: 2.5,
+                }}
+              />
+            )}
           </Stack>
         </Grid>
         <Stack

@@ -5,7 +5,7 @@ import {Divider, Grid, Stack, Typography} from "@mui/material";
 import Tablesearchbtn from "../../common/Button/Tablesearchbtn";
 
 const Bannerthirdsec = () => {
-  const {state} = useContext(AppContext);
+  const {state, mediaQuery} = useContext(AppContext);
 
   return (
     <Grid
@@ -35,20 +35,24 @@ const Bannerthirdsec = () => {
         >
           All Coins
         </Typography>
-        <Divider
-          orientation="vertical"
-          variant="middle"
-          flexItem
-          sx={{
-            borderColor: state.theme.borderColor, // or any other color
-            background: state.theme.fontColor,
-            height: "1px",
-            borderWidth: "1px",
-            borderStyle: "solid",
-            width: "91%",
-            mt: 2.5,
-          }}
-        />
+        {mediaQuery && mediaQuery.mobile ? (
+          ""
+        ) : (
+          <Divider
+            orientation="vertical"
+            variant="middle"
+            flexItem
+            sx={{
+              borderColor: state.theme.borderColor, // or any other color
+              background: state.theme.fontColor,
+              height: "1px",
+              borderWidth: "1px",
+              borderStyle: "solid",
+              width: "91%",
+              mt: 2.5,
+            }}
+          />
+        )}
       </Stack>
       <Stack sx={{mt: 4, width: {xs: "100%", sm: "auto"}}}>
         <Stack
