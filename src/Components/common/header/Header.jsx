@@ -42,7 +42,11 @@ function Header(props) {
   const drawer = (
     <Box
       onClick={handleDrawerToggle}
-      sx={{textAlign: "center", background: state.theme.bgColor}}
+      sx={{
+        textAlign: "center",
+        background: state.theme.bgColor,
+        height: "100vh",
+      }}
     >
       <Typography variant="h6" sx={{my: 2}}>
         <div style={{display: "flex", alignItems: "center", gap: "10px"}}>

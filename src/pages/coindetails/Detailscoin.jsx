@@ -115,7 +115,7 @@ const Detailscoin = () => {
             lg={4}
             sx={{
               height: "700px",
-              padding: "40px",
+              padding: {xs: "19px", sm: "40px"},
               backgroundColor: state.theme.bgColor,
               color: state.theme.fontColor,
               display: "flex",

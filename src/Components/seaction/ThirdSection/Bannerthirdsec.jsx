@@ -12,8 +12,8 @@ const Bannerthirdsec = () => {
       container
       sx={{
         background: state.theme.bgColor,
-        paddingLeft: "30px",
-        paddingRight: "30px",
+        paddingLeft: {xs: "6px", sm: "30px"},
+        paddingRight: {xs: "14px", sm: "30px"},
         boxSizing: "border-box",
       }}
     >

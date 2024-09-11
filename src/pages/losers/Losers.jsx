@@ -119,7 +119,8 @@ const Losers = () => {
       <Stack
         direction="row"
         style={{
-          paddingLeft: "62px",
+          paddingLeft: {xs: "19px", sm: "62px"},
+          paddingRight: {xs: "19px", sm: "62px"},
           fontSize: "x-large",
           paddingTop: "36px",
           gap: "10px",
@@ -156,7 +157,7 @@ const Losers = () => {
         component={Paper}
         sx={{
           background: state.theme.bgColor,
-          padding: "50px",
+          padding: {xs: "19px", sm: "50px"},
         }}
       >
         <Table
