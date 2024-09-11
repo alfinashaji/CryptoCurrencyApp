@@ -32,6 +32,9 @@ const Sectionbanner = () => {
     )
     .slice(0, 5);
 
+  const paddingLeft = mediaQuery && mediaQuery.mobile ? "14px" : "50px";
+  const paddingRight = mediaQuery && mediaQuery.mobile ? "14px" : "50px";
+
   return (
     <div>
       <Grid
@@ -50,9 +53,9 @@ const Sectionbanner = () => {
             display: "flex",
             justifyContent: "center",
             gap: "15px",
-            padding: "50px",
-            paddingLeft: "50px",
-            paddingRight: "50px",
+            padding: {xs: "14px", sm: "50px"}, // Example with breakpoints
+            paddingLeft: {xs: "14px", sm: "50px"},
+            paddingRight: {xs: "14px", sm: "50px"},
           }}
         >
           {mediaQuery && mediaQuery.mobile && <SearchButton />}

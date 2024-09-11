@@ -48,11 +48,13 @@ const SearchButton = () => {
     width: mediaQuery && mediaQuery.mobile ? "95%" : "30%",
   };
 
+  const height = mediaQuery && mediaQuery.mobile ? "55px" : "40px";
+
   const inputStyles = {
     width: "100%",
     background: state.theme.boxColor,
     borderRadius: "5px",
-    height: "40px",
+    height: height,
     input: {
       "&::placeholder": {
         opacity: 0.6,

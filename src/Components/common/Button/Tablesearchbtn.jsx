@@ -13,7 +13,7 @@ import {AppContext} from "../../../App";
 import {setSearchValue} from "../../../App"; // Adjust the import path as needed
 
 const Tablesearchbtn = () => {
-  const {state, dispatch} = useContext(AppContext);
+  const {state, dispatch, mediaQuery} = useContext(AppContext);
   const [show, setShow] = useState(false);
   const [searchValue, setSearchValueState] = useState("");
 
@@ -33,13 +33,17 @@ const Tablesearchbtn = () => {
     )
     .slice(0, 13); // Limit the number of displayed results
 
+  // Define height based on mediaQuery
+  const height = mediaQuery && mediaQuery.mobile ? "55px" : "40px";
+
+  // Define input styles
   const inputStyles = {
     width: "100%",
     background: state.theme.boxColor,
     borderRadius: "5px",
     color: "white",
     paddingLeft: "20px",
-    height: "40px",
+    height: height, // Use the height variable
     input: {
       "&::placeholder": {
         opacity: 0.6,

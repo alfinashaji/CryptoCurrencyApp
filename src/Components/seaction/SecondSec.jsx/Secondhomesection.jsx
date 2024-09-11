@@ -12,8 +12,8 @@ const Secondhomesection = () => {
         sx={{
           width: "100%",
           background: state.theme.bgColor,
-          paddingRight: "50px",
-          paddingLeft: "50px",
+          paddingLeft: {xs: "14px", sm: "50px"},
+          paddingRight: {xs: "14px", sm: "50px"},
           boxSizing: "border-box",
           height: "auto",
         }}
