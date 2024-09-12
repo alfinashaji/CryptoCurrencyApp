@@ -16,6 +16,7 @@ import moment from "moment/moment";
 import {AppContext} from "../../App";
 import MarqueewidjetDarkmode from "../../Components/common/marqueewidjet/marqueewidjetDark/MarqueewidjetDarkmode";
 import MarqueewidjetLightMode from "../../Components/common/marqueewidjet/marqueewidjetLight/MarqueewidjetLightMode";
+import Footer from "../../Components/common/footer/Footer";
 
 const Detailscoin = () => {
   const {id} = useParams();
@@ -301,13 +302,15 @@ const Detailscoin = () => {
             lg={8}
             sx={{
               display: "flex",
-
               backgroundColor: state.theme.bgColor,
               flexWrap: "wrap",
               alignContent: "flex-start",
               justifyContent: "flex-start",
               flexDirection: "column",
-              padding: "40px 30px",
+              padding: {
+                xs: "40px 16px", // for extra small screens
+                sm: "40px 30px", // for small screens and up
+              },
             }}
           >
             <Stack
@@ -323,6 +326,7 @@ const Detailscoin = () => {
           </Grid>
         </Grid>
       </Stack>
+      <Footer />
     </div>
   );
 };

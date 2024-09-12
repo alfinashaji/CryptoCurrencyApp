@@ -43,12 +43,13 @@ const Tablesearchbtn = () => {
     borderRadius: "5px",
     color: "white",
     paddingLeft: "20px",
+    paddingRight: "20px",
     height: height, // Use the height variable
     input: {
       "&::placeholder": {
         opacity: 0.6,
         color: state.theme.fontColor,
-        fontSize: "13px",
+        fontSize: "16px",
         paddingX: 1.5,
       },
     },

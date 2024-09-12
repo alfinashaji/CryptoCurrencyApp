@@ -51,16 +51,19 @@ const SearchButton = () => {
   const height = mediaQuery && mediaQuery.mobile ? "55px" : "40px";
 
   const inputStyles = {
+    paddingLeft: "20px",
+    paddingRight: "20px",
     width: "100%",
     background: state.theme.boxColor,
     borderRadius: "5px",
     height: height,
+
     input: {
       "&::placeholder": {
         opacity: 0.6,
         color: state.theme.fontColor,
 
-        fontSize: "13px",
+        fontSize: "16px",
         paddingX: 1.5,
       },
     },
