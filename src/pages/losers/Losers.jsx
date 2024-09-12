@@ -14,6 +14,7 @@ import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutl
 import axios from "axios";
 import debounce from "lodash.debounce";
 import {Link} from "react-router-dom";
+import Footer from "../../Components/common/footer/Footer";
 
 // Styled TableCell for header and body
 const StyledTableCell = styled(TableCell)(({theme}) => ({
@@ -289,6 +290,7 @@ const Losers = () => {
           <ArrowForwardIosOutlinedIcon />
         </CustomButton>
       </div>
+      <Footer />
     </div>
   );
 };

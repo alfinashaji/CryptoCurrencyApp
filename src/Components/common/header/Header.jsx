@@ -49,7 +49,14 @@ function Header(props) {
       }}
     >
       <Typography variant="h6" sx={{my: 2}}>
-        <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            paddingLeft: "45px",
+          }}
+        >
           <img src={logoImage} alt="" style={{height: "35px"}} />
           <div style={{color: state.theme.fontColor}}>Coin Wave</div>
         </div>
@@ -100,7 +107,7 @@ function Header(props) {
           >
             <div style={{display: "flex", alignItems: "center", gap: "10px"}}>
               <img src={logoImage} alt="" style={{height: "35px"}} />
-              <div>Coin Wave</div>
+              <div style={{color: state.theme.fontColor}}>Coin Wave</div>
             </div>
           </Grid>
 
