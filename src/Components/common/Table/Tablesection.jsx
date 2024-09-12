@@ -242,7 +242,7 @@ const Tablesection = () => {
           display: "flex",
           justifyContent: "center",
           gap: "10px",
-          marginTop: "10px",
+          marginTop: "20px",
         }}
       >
         <CustomButton

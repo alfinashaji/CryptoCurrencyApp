@@ -23,12 +23,12 @@ const Allbutton = () => {
           backgroundColor: isDarkMode ? "#030619" : "#e9e9e9", // Sets the background color
           color: "#ffffff", // Sets the color of the icon
           "&:hover": {
-            backgroundColor: "#030619", // Keeps the background color on hover
+            backgroundColor: "#e9e9e9", // Keeps the background color on hover
           },
         }}
       >
         {!isDarkMode ? (
-          <DarkMode sx={{color: "#ffc40c", fontSize: "20px"}} />
+          <DarkMode sx={{color: "#130f00", fontSize: "20px"}} />
         ) : (
           <LightMode sx={{color: "#FFFFFF", fontSize: "inherit"}} />
         )}

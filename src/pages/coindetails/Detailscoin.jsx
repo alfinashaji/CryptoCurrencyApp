@@ -101,11 +101,6 @@ const Detailscoin = () => {
 
   return (
     <div>
-      {state && state.theme.mode === "dark" ? (
-        <MarqueewidjetDarkmode />
-      ) : (
-        <MarqueewidjetLightMode />
-      )}
       <Stack>
         <Grid container direction={{xs: "column", md: "row"}}>
           <Grid
