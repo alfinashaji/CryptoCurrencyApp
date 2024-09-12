@@ -9,6 +9,8 @@ import {initialValue, appReducer} from "./reducer/appReducer";
 import Header from "./Components/common/header/Header";
 import {useMediaQuery} from "react-responsive";
 import AllCoins from "./pages/allcoins/AllCoins";
+import MarqueewidjetDarkmode from "./Components/common/marqueewidjet/marqueewidjetDark/MarqueewidjetDarkmode";
+import MarqueewidjetLightMode from "./Components/common/marqueewidjet/marqueewidjetLight/MarqueewidjetLightMode";
 
 export const AppContext = createContext();
 
@@ -25,6 +27,11 @@ function App() {
       }}
     >
       <Header />
+      {state && state.theme.mode === "dark" ? (
+        <MarqueewidjetDarkmode />
+      ) : (
+        <MarqueewidjetLightMode />
+      )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/coins/:id" element={<Detailscoin />} />

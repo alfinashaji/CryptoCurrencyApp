@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from "react";
+import React, {useContext, useRef, useState, useEffect} from "react";
 import {
   Grid,
   Input,
@@ -10,12 +10,14 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import {AppContext} from "../../../App";
+import {Link} from "react-router-dom";
 
 const SearchButton = () => {
   const {state, mediaQuery} = useContext(AppContext);
   const [show, setShow] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  // const inputRef = useRef();
+  const boxRef = useRef(null);
+
   const handleClick = () => {
     setShow((prevShow) => !prevShow);
   };
@@ -46,6 +48,7 @@ const SearchButton = () => {
     maxHeight: "300px", // Limit height to avoid overflow
     overflowY: "auto", // Add scroll if needed
     width: mediaQuery && mediaQuery.mobile ? "95%" : "30%",
+    scrollbarWidth: "none",
   };
 
   const height = mediaQuery && mediaQuery.mobile ? "55px" : "40px";
@@ -57,6 +60,7 @@ const SearchButton = () => {
     background: state.theme.boxColor,
     borderRadius: "5px",
     height: height,
+    color: state.theme.fontColor,
 
     input: {
       "&::placeholder": {
@@ -68,6 +72,20 @@ const SearchButton = () => {
       },
     },
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (boxRef.current && !boxRef.current.contains(event.target)) {
+        setShow(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Box>
@@ -88,7 +106,7 @@ const SearchButton = () => {
       </Grid>
 
       {show && (
-        <Box sx={boxStyles}>
+        <Box sx={boxStyles} ref={boxRef}>
           <Input
             sx={inputStyles}
             value={searchValue}
@@ -115,57 +133,62 @@ const SearchButton = () => {
           <Stack spacing={1.3} mt={1}>
             {filteredCoins?.length > 0 ? (
               filteredCoins.map((coin) => (
-                <Box
+                <Link
+                  to={`/coins/${coin.id}`}
                   key={coin.id}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                  }}
+                  style={{textDecoration: "none", color: state.theme.fontColor}}
                 >
-                  <Stack spacing={1.3} direction="row" sx={{width: "100%"}}>
-                    <Stack spacing={1.3} direction="row" sx={{width: "60%"}}>
-                      <Avatar
-                        alt={coin.name}
-                        src={coin.image}
-                        sx={{
-                          width: 20,
-                          height: 20,
-                          background: "white",
-                          marginRight: "10px",
-                        }}
-                      />
-                      <Typography
-                        variant="body2"
-                        component="span"
-                        sx={{fontWeight: "light"}}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <Stack spacing={1.3} direction="row" sx={{width: "100%"}}>
+                      <Stack spacing={1.3} direction="row" sx={{width: "60%"}}>
+                        <Avatar
+                          alt={coin.name}
+                          src={coin.image}
+                          sx={{
+                            width: 20,
+                            height: 20,
+                            background: "white",
+                            marginRight: "10px",
+                          }}
+                        />
+                        <Typography
+                          variant="body2"
+                          component="span"
+                          sx={{fontWeight: "light"}}
+                        >
+                          {coin.name} ({coin.symbol.toUpperCase()})
+                        </Typography>
+                      </Stack>
+                      <Stack
+                        spacing={1.3}
+                        direction="row"
+                        sx={{width: "40%"}}
+                        justifyContent="flex-end"
                       >
-                        {coin.name} ({coin.symbol.toUpperCase()})
-                      </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color:
+                              coin.price_change_percentage_24h > 0
+                                ? "#20D9AE"
+                                : "#FF0000",
+                          }}
+                        >
+                          {coin.price_change_percentage_24h}%
+                        </Typography>
+                        <Typography variant="body2" component="span">
+                          #{coin.market_cap_rank}
+                        </Typography>
+                      </Stack>
                     </Stack>
-                    <Stack
-                      spacing={1.3}
-                      direction="row"
-                      sx={{width: "40%"}}
-                      justifyContent="flex-end"
-                    >
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color:
-                            coin.price_change_percentage_24h > 0
-                              ? "#20D9AE"
-                              : "#FF0000",
-                        }}
-                      >
-                        {coin.price_change_percentage_24h}%
-                      </Typography>
-                      <Typography variant="body2" component="span">
-                        #{coin.market_cap_rank}
-                      </Typography>
-                    </Stack>
-                  </Stack>
-                </Box>
+                  </Box>
+                </Link>
               ))
             ) : (
               <Typography variant="body2">No coins available</Typography>

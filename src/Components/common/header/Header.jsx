@@ -25,7 +25,7 @@ import {Stack} from "@mui/material";
 const drawerWidth = 240;
 const navItems = [
   {name: "Home", path: "/"},
-  {name: "AllCoins", path: "/AllCoins"},
+  {name: "All Coins", path: "/AllCoins"},
   {name: "Gainers", path: "/gainers"},
   {name: "Losers", path: "/losers"},
 ];
@@ -54,7 +54,7 @@ function Header(props) {
             display: "flex",
             alignItems: "center",
             gap: "10px",
-            paddingLeft: "45px",
+            paddingLeft: "20px",
           }}
         >
           <img src={logoImage} alt="" style={{height: "35px"}} />
@@ -63,13 +63,13 @@ function Header(props) {
       </Typography>
 
       <Divider />
-      <List>
+      <List sx={{paddingLeft: "10px"}}>
         {navItems.map(({name, path}) => (
           <ListItem key={name} disablePadding>
             <ListItemButton
               component={Link}
               to={path}
-              sx={{textAlign: "center", color: state.theme.fontColor}}
+              sx={{textAlign: "start", color: state.theme.fontColor}}
             >
               <ListItemText primary={name} />
             </ListItemButton>
@@ -94,7 +94,7 @@ function Header(props) {
             onClick={handleDrawerToggle}
             sx={{mr: 2, display: {sm: "none"}}}
           >
-            <MenuIcon />
+            {<MenuIcon sx={{color: state.theme.fontColor}} />}
           </IconButton>
           <Stack>{mediaQuery && mediaQuery.mobile ? <Allbutton /> : ""}</Stack>
 

@@ -268,7 +268,7 @@ const Gainers = () => {
           display: "flex",
           justifyContent: "center",
           gap: "10px",
-
+          marginTop: "20px",
           background: state.theme.bgColor,
         }}
       >
